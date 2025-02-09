@@ -1,25 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import UploadFile from './components/UploadFile';
+import TaskTable from './components/TaskTable';
+import GanttChart from './components/GanttChart';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [tasks, setTasks] = useState([]);  // ✅ Define tasks state
+
+    const handleUploadSuccess = (data) => {
+        alert(`Critical Path: ${data.critical_path.join(" → ")}, Duration: ${data.duration} days`);
+        setTasks(data.critical_path.map(task => ({ name: task, duration: 5, dependencies: [] })));
+    };
+
+    return (
+        <div className="App">
+            <h1>CPM Replacement Tool</h1>
+            <UploadFile onUploadSuccess={handleUploadSuccess} />  {/* ✅ Upload CSV */}
+            <TaskTable tasks={tasks} setTasks={setTasks} />  {/* ✅ Editable Task Table */}
+            <GanttChart tasks={tasks} />  {/* ✅ Gantt Chart */}
+        </div>
+    );
 }
 
 export default App;
