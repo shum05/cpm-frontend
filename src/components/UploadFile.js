@@ -18,15 +18,17 @@ const UploadFile = ({ onUploadSuccess }) => {
         formData.append("file", file);
         
         try {
-            const response = await axios.post("https://cpm-backend-kw0o.onrender.com", formData);
+            const response = await axios.post("https://cpm-backend-kw0o.onrender.com/upload", formData);
             onUploadSuccess(response.data);
         } catch (error) {
             console.error("Error uploading file", error);
+            alert("Failed to upload file. Check the backend logs.");
         }
     };
 
     return (
         <div>
+            <h2>Upload CSV File</h2>
             <input type="file" onChange={handleFileChange} />
             <button onClick={handleUpload}>Upload</button>
         </div>
