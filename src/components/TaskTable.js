@@ -1,11 +1,7 @@
 import React from 'react';
 
-const TaskTable = ({ tasks, setTasks }) => {
-    const handleEdit = (index, field, value) => {
-        const updatedTasks = [...tasks];
-        updatedTasks[index][field] = value;
-        setTasks(updatedTasks);
-    };
+const TaskTable = ({ tasks }) => {
+    console.log("Rendering TaskTable with tasks:", tasks); // ✅ Debugging log
 
     return (
         <div>
@@ -19,25 +15,19 @@ const TaskTable = ({ tasks, setTasks }) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {tasks.map((task, index) => (
-                        <tr key={index}>
-                            <td>{task.name}</td>
-                            <td>
-                                <input
-                                    type="number"
-                                    value={task.duration}
-                                    onChange={(e) => handleEdit(index, "duration", parseInt(e.target.value))}
-                                />
-                            </td>
-                            <td>
-                                <input
-                                    type="text"
-                                    value={task.dependencies.join(", ")}
-                                    onChange={(e) => handleEdit(index, "dependencies", e.target.value.split(", "))}
-                                />
-                            </td>
+                    {tasks && tasks.length > 0 ? (
+                        tasks.map((task, index) => (
+                            <tr key={index}>
+                                <td>{task.name}</td>
+                                <td>{task.duration}</td>
+                                <td>{task.dependencies.length > 0 ? task.dependencies.join(", ") : "-"}</td>
+                            </tr>
+                        ))
+                    ) : (
+                        <tr>
+                            <td colSpan="3">No tasks uploaded yet</td>
                         </tr>
-                    ))}
+                    )}
                 </tbody>
             </table>
         </div>

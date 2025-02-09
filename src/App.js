@@ -7,17 +7,23 @@ function App() {
     const [tasks, setTasks] = useState([]);  // ✅ Define tasks state
 
     const handleUploadSuccess = (data) => {
-      alert(`Critical Path: ${data.critical_path.join(" → ")}, Duration: ${data.duration} days`);
+      console.log("Received Data:", data); // ✅ Debugging log
   
-      // Ensure correct formatting for TaskTable
+      if (!data || !data.critical_path) {
+          alert("Error: No tasks returned from backend.");
+          return;
+      }
+  
       const formattedTasks = data.critical_path.map(task => ({
           name: task,
           duration: 5, // Default duration (modify if needed)
           dependencies: []
       }));
   
+      console.log("Formatted Tasks:", formattedTasks); // ✅ Debugging log
       setTasks(formattedTasks);
   };
+  
   
 
     return (
