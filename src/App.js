@@ -7,9 +7,18 @@ function App() {
     const [tasks, setTasks] = useState([]);  // ✅ Define tasks state
 
     const handleUploadSuccess = (data) => {
-        alert(`Critical Path: ${data.critical_path.join(" → ")}, Duration: ${data.duration} days`);
-        setTasks(data.critical_path.map(task => ({ name: task, duration: 5, dependencies: [] })));
-    };
+      alert(`Critical Path: ${data.critical_path.join(" → ")}, Duration: ${data.duration} days`);
+  
+      // Ensure correct formatting for TaskTable
+      const formattedTasks = data.critical_path.map(task => ({
+          name: task,
+          duration: 5, // Default duration (modify if needed)
+          dependencies: []
+      }));
+  
+      setTasks(formattedTasks);
+  };
+  
 
     return (
         <div className="App">

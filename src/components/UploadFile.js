@@ -19,12 +19,13 @@ const UploadFile = ({ onUploadSuccess }) => {
         
         try {
             const response = await axios.post("https://cpm-backend-kw0o.onrender.com/upload", formData);
-            onUploadSuccess(response.data);
+            onUploadSuccess(response.data); // ✅ Ensures data is passed to App.js
         } catch (error) {
             console.error("Error uploading file", error);
-            alert("Failed to upload file. Check the backend logs.");
+            alert("Upload failed. Check backend logs.");
         }
     };
+    
 
     return (
         <div>
